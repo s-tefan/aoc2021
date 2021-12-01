@@ -3,6 +3,7 @@
 def a(depths):
     sinks = [(depths[n+1]-depths[n]) > 0 for n in range(len(depths)-1)]
     return sinks.count(True)
+
 def b(depths):
     sinks = [(depths[n+3]-depths[n]) > 0 for n in range(len(depths)-3)]
     return sinks.count(True)
@@ -10,9 +11,6 @@ def b(depths):
 with open("input.txt") as f:
     input = f.readlines()
 
-
 depthlist = [int(x) for x in input]
 print(a(depthlist))
 print(b(depthlist))
-
-
