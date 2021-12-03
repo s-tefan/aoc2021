@@ -11,7 +11,6 @@ def partone(input):
             delta |= 1
         else:
             epsilon |= 1
-    #print(n, ones, "{:b}, {:b}".format(delta, epsilon))
     return epsilon*delta
 
 def brupp(codelist, bitpos, mc = True):
@@ -24,7 +23,6 @@ def brupp(codelist, bitpos, mc = True):
 
 def parttwo(input):
     stripped_input = [k.strip() for k in input]
-    current_bit_position = 0
     oxygen = stripped_input
     co2scrub = stripped_input
     bitpos = 0
