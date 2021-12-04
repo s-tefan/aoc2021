@@ -37,14 +37,14 @@ def partboth(input):
         to_remove = set()
         for bricka in brickor:
             if bricka.check_bingo(nums):
-                values = (k, nums[-1], bricka.sum_of_unmarked(nums), nums[-1]*bricka.sum_of_unmarked(nums))
+                latest = {'rounds': k, 'last drawn': nums[-1], 'sum of unmarked': bricka.sum_of_unmarked(nums), 'score': nums[-1]*bricka.sum_of_unmarked(nums)}
                 if no_win:
-                    first = values
+                    first = latest
                     no_win = False
                 to_remove.add(bricka)
         brickor.difference_update(to_remove)
         if not brickor:
-            return first, values
+            return first, latest
 
 with open("input.txt") as f:
     input = f.readlines()
