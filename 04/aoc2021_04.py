@@ -49,3 +49,4 @@ def partboth(input):
 with open("input.txt") as f:
     input = f.readlines()
     print(partboth(input))
+
