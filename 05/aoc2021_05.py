@@ -1,4 +1,5 @@
-def line_ends(input):
+def line_ends_v0(input):
+    # replaced by function below
     lines = []
     for line in input:
         a,b = line.strip().split(' -> ')
@@ -7,6 +8,10 @@ def line_ends(input):
         coords = [int(x) for x in (ax,ay,bx,by)]
         lines.append(coords)
     return lines
+
+def line_ends(input):
+    """ Read input to quadruple of ints. """
+    return [tuple(map(lambda x: int(x), quad)) for quad in [','.join(line.strip().split(' -> ')).split(',') for line in filter(lambda x: x.strip() != "", input)]]
 
 def line_points_1(allines):
     lines = []
