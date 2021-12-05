@@ -1,7 +1,6 @@
 def line_ends(input):
     lines = []
     for line in input:
-        stripped_line = line.strip()
         a,b = line.strip().split(' -> ')
         ax, ay = a.split(',')
         bx, by = b.split(',')
