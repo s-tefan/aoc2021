@@ -1,7 +1,7 @@
 def ver_one(input, gens):
     state = [int(x) for x in input.strip().split(',')]
-    newborn = 0
     for gen in range(gens):
+        newborn = 0
         for k, n in enumerate(state):
             match n:
                 case 0:
@@ -10,8 +10,6 @@ def ver_one(input, gens):
                 case _:
                     state[k] -= 1
         state += [8]*newborn
-        newborn = 0
-        #print(state)
     return len(state)
 
 def ver_two(input, gens):
