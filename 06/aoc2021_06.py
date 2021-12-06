@@ -23,7 +23,7 @@ def ver_two(input, gens):
     newborn = 0
     for gen in range(gens):
         mothers = nos[0]
-        for k in range(len(nos) - 1):
+        for k in range(n):
             nos[k] = nos[k+1]
         nos[n] = mothers
         nos[6] += mothers
