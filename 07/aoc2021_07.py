@@ -9,13 +9,19 @@ def optfun(crabpos, a):
     return int(sum(abs(x-a)*(abs(x-a)+1)/2 for x in crabpos))
 
 '''Optimized by a where 
-n*a - sum(x for x in crabpos) - sum(sgn(x[i]-a) fro x in crabpos) == 0
+n*a - sum(x for x in crabpos) - sum(sgn(x-a) for x in crabpos)/2 == 0
 approximated by a = sum(x[i])/n.'''
 
+def sgn(x):
+    return int(x>0) - int(x<0)
+
 def optimize2(crabpos):
-    a = int(sum(crabpos)/len(crabpos))
-    b, c = (optfun(crabpos, a), optfun(crabpos, a+1))
-    return (a,b) if b <= c else (a+1,c)
+    a = sum(crabpos)/len(crabpos)
+    a += sum(sgn(x-a) for x in crabpos)/2/len(crabpos)
+    print(a)
+    b, c = (optfun(crabpos, int(a)), optfun(crabpos, int(a+1)))
+    print(optfun(crabpos,a))
+    return (int(a),b) if b <= c else (int(a)+sgn(a),c)
     # hopefully this gives the true optimum, should really check by stepping ...
 
 test = [16,1,2,0,4,2,7,1,2,14]
