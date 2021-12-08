@@ -26,25 +26,25 @@ def parttwo(input_lines):
             addsym(digit_dict, m, next(x for x in aa if len(x) == k))
         addsym(digit_dict, 6, next(x for x in aa if 
             x not in digit_dict and 
-            len(set(digit_dict[1]).intersection(set(x))) == 1 and 
+            len(set(x) & set(digit_dict[1])) == 1 and 
             len(x) == 6))
         addsym(digit_dict, 5, next(x for x in aa if 
             x not in digit_dict and 
-            len(set(digit_dict[1]).intersection(set(x))) == 1 and 
-            len(set(digit_dict[4]).intersection(set(x))) == 3))
+            len(set(x) & set(digit_dict[1])) == 1 and 
+            len(set(x) & set(digit_dict[4])) == 3))
         addsym(digit_dict, 2, next(x for x in aa if 
             x not in digit_dict and 
-            len(set(digit_dict[1]).intersection(set(x))) == 1 and 
-            len(set(digit_dict[4]).intersection(set(x))) == 2))
+            len(set(x) & set(digit_dict[1])) == 1 and 
+            len(set(x) & set(digit_dict[4])) == 2))
         addsym(digit_dict, 3, next(x for x in aa if 
             x not in digit_dict and 
             len(x) == 5))
         addsym(digit_dict, 9, next(x for x in aa if 
             x not in digit_dict and 
-            len(set(x).intersection(set(digit_dict[4]))) == 4))
+            len(set(x) & set(digit_dict[4])) == 4))
         addsym(digit_dict, 0, next(x for x in aa if 
             x not in digit_dict and 
-            len(set(x).intersection(set(digit_dict[4]))) == 3))
+            len(set(x) & set(digit_dict[4])) == 3))
         s += int(''.join(str(digit_dict[sorted_string(digit)])
                  for digit in b.split()))
     return(s)
