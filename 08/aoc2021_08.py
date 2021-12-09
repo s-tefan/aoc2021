@@ -1,42 +1,56 @@
-import math
-def partone(input):
-    minima = set()
-    risk = 0
-    rowlength = len(input[0])
-    for r, row in enumerate(input):
-        if r not in {0,len(input)-1}:
-            for c, v in enumerate(row): 
-                if c not in {0,len(row)-1}:
-                    if v < min([input[r-1][c], row[c-1], row[c+1], input[r+1][c]]):
-                        minima.add((r,c))
-                        risk += (v + 1)
-    return risk, minima
+def partone(input_lines):
+    s = 0
+    for line in input_lines:
+        _, b = line.split(' | ')
+        s += sum([len(x) for x in b.split()].count(n) for n in {2, 4, 3, 7})
+    return(s)
 
 
-def expand_basin(input, basin, point):
-    r,c = point
-    for (rr,cc) in ((r-1,c), (r,c-1), (r,c+1), (r+1,c)):
-        if (rr,cc) not in basin and input[rr][cc] < 9 and  input[rr][cc] > input[r][c]:
-            basin.add((rr,cc))
-            expand_basin(input, basin, (rr,cc))
+def sorted_string(s):
+    return ''.join(sorted(s))
 
 
+def addsym(d, a, b):
+    d[a] = b
+    d[b] = a
 
-def parttwo(input, minima):
-    basinsizelist = []
-    for minimum in minima:
-        basin = set()
-        basin.add(minimum)
-        expand_basin(input, basin, minimum)
-        #print(basin)
-        basinsizelist.append(len(basin))
-    #print(basinsizelist)
-    sortedlist = sorted(basinsizelist)
-    return sortedlist[-1] * sortedlist[-2] * sortedlist[-3]
+
+def parttwo(input_lines):
+    s = 0
+    for line in input_lines:
+        a, b = line.split(' | ')
+        aa = [sorted_string(x) for x in a.split()]
+        digit_dict = {}  # will map in both ways
+        unique = {2: 1, 3: 7, 4: 4, 7: 8}
+        for k, m in unique.items():
+            addsym(digit_dict, m, next(x for x in aa if len(x) == k))
+        addsym(digit_dict, 6, next(x for x in aa if 
+            x not in digit_dict and 
+            len(set(x) & set(digit_dict[1])) == 1 and 
+            len(x) == 6))
+        addsym(digit_dict, 5, next(x for x in aa if 
+            x not in digit_dict and 
+            len(set(x) & set(digit_dict[1])) == 1 and 
+            len(set(x) & set(digit_dict[4])) == 3))
+        addsym(digit_dict, 2, next(x for x in aa if 
+            x not in digit_dict and 
+            len(set(x) & set(digit_dict[1])) == 1 and 
+            len(set(x) & set(digit_dict[4])) == 2))
+        addsym(digit_dict, 3, next(x for x in aa if 
+            x not in digit_dict and 
+            len(x) == 5))
+        addsym(digit_dict, 9, next(x for x in aa if 
+            x not in digit_dict and 
+            len(set(x) & set(digit_dict[4])) == 4))
+        addsym(digit_dict, 0, next(x for x in aa if 
+            x not in digit_dict and 
+            len(set(x) & set(digit_dict[4])) == 3))
+        s += int(''.join(str(digit_dict[sorted_string(digit)])
+                 for digit in b.split()))
+    return(s)
+
 
 with open("input.txt") as f:
-    input = [[math.inf] + [int(c) for c in line.strip()] + [math.inf] for line in f.readlines()]
-    input = [[math.inf]*len(input[0])] + input + [[math.inf]*len(input[0])] 
-    risk, minima = partone(input)
-    print(risk)
-    print(parttwo(input, minima))
+    input_lines = [line.strip() for line in f.readlines()]
+    print(partone(input_lines))
+    print(parttwo(input_lines))
