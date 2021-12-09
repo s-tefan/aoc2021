@@ -28,10 +28,8 @@ def parttwo(input, minima):
     for minimum in minima:
         basin = set()
         basin.add(minimum)
-        expand_basin(input, basin, minimum)
-        # print(basin)
+        expand_basin(input, basin, minimum) # recursively find all points in the basin
         basinsizelist.append(len(basin))
-    # print(basinsizelist)
     sortedlist = sorted(basinsizelist)
     return sortedlist[-1] * sortedlist[-2] * sortedlist[-3]
 
