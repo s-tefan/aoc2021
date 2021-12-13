@@ -21,7 +21,6 @@ def fold_set(point_set, fold):
     mini = min({x[fold_dim] for x in point_set})
     maxi = max({x[fold_dim] for x in point_set})
     offset = 0 if maxi - fold_line <= fold_line - mini else maxi + mini - 2*fold_line
-    print(offset)
     for point in point_set:
         new_point = list(point)
         if point[fold_dim] > fold_line:
