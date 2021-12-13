@@ -35,8 +35,6 @@ def fold_set(point_set, fold):
 def partone(data):
     points = data["points"]
     folds = data["folds"]
-    print('points:', points)
-    print('folds:', folds)
     fold = folds[0]
     points = fold_set(points, fold)
     return(points)
@@ -45,8 +43,6 @@ def partone(data):
 def parttwo(data):
     points = data["points"]
     folds = data["folds"]
-    print('points:', points)
-    print('folds:', folds)
     for fold in folds:
         points = fold_set(points, fold)
     xmax = max({x[0] for x in points})
