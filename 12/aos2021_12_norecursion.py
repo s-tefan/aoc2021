@@ -87,32 +87,77 @@ class CaveSystem:
             else:
                 raise(Exception("För fan"))
 
-    def buildlist1(self, start, end):
-        """Funkar inte än"""
+    def path_list1(self, start, end):
+        """Return all finished paths according to part 1 rules."""
         path_list_unfinished = [[start]]
         path_list_finished = []
-        while path_list_unfinished:
-            while path_list_unfinished:
-                delta_list = []
-                path = path_list_unfinished.pop(0)
-                for c in self.passages_to(path[-1]):
+        while path_list_unfinished: # run as long as there is
+            delta_list = []
+            while path_list_unfinished: # until popped empty
+                path = path_list_unfinished.pop(0) # pop
+                for c in self.passages_to(path[-1]): # continue from last
                     new_path = list(path)
-                    print(c)
                     if c == end:
                         new_path.append(c)
                         path_list_finished.append(new_path)
-                        print(new_path)
                     elif c in self.large_caves or c not in path:
                         new_path.append(c)
                         delta_list.append(new_path)
-                        print(new_path)
             path_list_unfinished = delta_list
         return path_list_finished
 
+    def path_list2(self, start, end):
+        """Return all finished paths according to part 2 rules."""
+        path_list_unfinished = [{'bullet': True, 'path': [start]}]
+        path_list_finished = []
+        while path_list_unfinished: # run as long as there is
+            delta_list = []
+            while path_list_unfinished: # until popped empty
+                path = path_list_unfinished.pop(0) #
+
+                for c in self.passages_to(path['path'][-1]): # continue from last
+                    new_path = list(path['path'])
+                    if c == end:
+                        new_path.append(c)
+                        path_list_finished.append({'bullet': path['bullet'], 'path': new_path})
+                    elif c in self.large_caves or c not in new_path:
+                        new_path.append(c)
+                        delta_list.append({'bullet': path['bullet'], 'path': new_path})
+                    elif path['bullet'] and c != start:
+                        new_path.append(c)
+                        delta_list.append({'bullet': False, 'path': new_path})
+            path_list_unfinished = delta_list
+        return path_list_finished
+
+    def count_paths2(self, start, end):
+        """Return number of finished paths, don't deliver them."""
+        path_list_unfinished = [{'bullet': True, 'path': [start]}]
+        n_path_list_finished = 0
+        while path_list_unfinished: # run as long as there is
+            delta_list = []
+            while path_list_unfinished: # until popped empty
+                path = path_list_unfinished.pop(0) #
+
+                for c in self.passages_to(path['path'][-1]): # continue from last
+                    new_path = list(path['path'])
+                    if c == end:
+                        new_path.append(c)
+                        n_path_list_finished += 1
+                    elif c in self.large_caves or c not in new_path:
+                        new_path.append(c)
+                        delta_list.append({'bullet': path['bullet'], 'path': new_path})
+                    elif path['bullet'] and c != start:
+                        new_path.append(c)
+                        delta_list.append({'bullet': False, 'path': new_path})
+            path_list_unfinished = delta_list
+        return n_path_list_finished
 
 
 
-cs = CaveSystem("test1.txt")
+cs = CaveSystem("input.txt")
 #print(cs.count('start', 'end'))
 #print(cs.count2('start', 'end', True, set()))
-print(cs.buildlist1("start", "end"))
+pathlist = cs.path_list1("start", "end")
+print(len(pathlist))
+#pathlist2 = cs.path_list2("start", "end")
+print(cs.count_paths2("start", "end"))

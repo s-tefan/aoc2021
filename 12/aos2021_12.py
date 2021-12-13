@@ -87,6 +87,7 @@ class CaveSystem:
             else:
                 raise(Exception("För fan"))
 
-cs = CaveSystem("input.txt")
+cs = CaveSystem(" input.txt")
 print(cs.count('start', 'end'))
+#print(cs.count2('start', 'end', False, set()))
 print(cs.count2('start', 'end', True, set()))
