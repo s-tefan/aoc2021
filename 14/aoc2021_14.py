@@ -69,7 +69,7 @@ def parttwo(template, rules, n):
     for digraph in digraph_count:
         increase_counter(atom_count_twice, digraph[0], digraph_count[digraph])
         increase_counter(atom_count_twice, digraph[1], digraph_count[digraph])
-    # First and last character were only counted atom_count_twice
+    # First and last character were only counted once.
     increase_counter(atom_count_twice, first, 1)
     increase_counter(atom_count_twice, last, 1)
     return (max(atom_count_twice.values()) - min(atom_count_twice.values()))//2
