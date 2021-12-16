@@ -3,7 +3,9 @@ from math import inf
 def main():
     with open("input.txt") as f:
         cave = [[int(x) for x in row.strip()] for row in f.readlines()]
-        partone(cave)
+        print(partone(cave))
+        print(parttwo(cave))
+
 
 def value(cave, node):
     return cave[node[0]][node[1]]
@@ -30,7 +32,7 @@ def partone(cave):
     risk = {node: inf for node in unvisited_set}
     risk[(0,0)] = 0
     current_node = (0,0)
-    while unvisited_set:
+    while last_node in unvisited_set:
         #print(current_node, risk[current_node], unvisited_set)
         for unvisited_neighbour in \
             neighbour_set(current_node, m, n) & unvisited_set:
@@ -42,6 +44,23 @@ def partone(cave):
         if unvisited_set:
             current_node = minimal_risk(risk, unvisited_set)
     #print("***", risk)
-    print(">>>", risk[last_node])
+    return risk[last_node]
+
+def rollover(x):
+    if x > 9:
+        return x - 9
+    else:
+        return x
+
+def parttwo(cave):
+    bigcave = []
+    for k in range(5):
+        for row in cave:
+            bigcave.append([rollover(x+k) for x in row])
+    for row in bigcave:
+        brow = list(row)
+        for k in range(1,5):
+            row += [rollover(x+k) for x in brow]
+    return partone(bigcave)
 
 main()
