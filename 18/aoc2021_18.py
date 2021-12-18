@@ -1,24 +1,3 @@
-class SnailfishNumber(list):
-    @classmethod
-    def sum(a, b):
-        return [a,b]
-
-    def reduce(self, level = 0):
-        if level >=4:
-            pass
-
-    def magnitude(self):
-        a, b = self
-        if isinstance(a, SnailfishNumber):
-            c = 3*a.magnitude()
-        else:
-            c = 3*a
-        if isinstance(b, SnailfishNumber):
-            d = 2*b.magnitude()
-        else:
-            d = 2*b
-        return c+d
-
 class SFN:
     def __init__(self):
         self.nodelist = []
@@ -37,7 +16,6 @@ class SFN:
             elif  c == "]":
                     pf = pf[:-1]
         return self
-
 
     def explode(self, pos):
         # po is teh position in nodelist of the left number of a pair
@@ -91,40 +69,49 @@ class SFN:
         while (not self.reduced()):
             pass
 
+    def __str__(self):
+        return str(self.nodelist)
 
-def main():
-    with open("test.txt") as f:
+    def magnitude(self):
+        nl = self.nodelist
+        if len(nl) == 1:
+            return int(nl[0]["number"])
+        else:
+            L = SFN()
+            R = SFN()
+            L.nodelist = [{"track": x["track"][1:], "number": x["number"]}
+                    for x in nl if x["track"][0] == "L"]
+            R.nodelist = [{"track": x["track"][1:], "number": x["number"]}
+                    for x in nl if x["track"][0] == "R"]
+            return 3*L.magnitude() + 2*R.magnitude()
+
+def partone(filename):
+    with open(filename) as f:
         s = SFN()
-        n = SFN()
+        s.read(f.readline().strip())
         for line in f.readlines():
+            n = SFN()
             n.read(line.strip())
-            print("n:", n.nodelist)
             s = SFN.sum(s,n)
-            print("s:", s.nodelist)
             s.reduce()
-            print("sred:", s.nodelist)
-        #print(s.magnitude())
+        print(s.magnitude())
+
+def parttwo(filename):
+    with open(filename) as f:
+        sfn_list = []
+        for line in f.readlines():
+            n = SFN()
+            n.read(line.strip())
+            sfn_list.append(n)
+        mag_list = []
+        for a in sfn_list:
+            for b in sfn_list:
+                if a != b:
+                    s = SFN.sum(a,b)
+                    s.reduce()
+                    mag_list.append(s.magnitude())
+        print(max(mag_list))
 
 
-main()
-
-'''
-# [[[[4,3],4],4],[7,[[8,4],9]]] + [1,1]
-bepa = SFN()
-bepa.read("[[[[4,3],4],4],[7,[[8,4],9]]]")
-print(bepa.nodelist)
-cepa = SFN()
-cepa.read("[1,1]")
-print(cepa.nodelist)
-depa = SFN.sum(bepa, cepa)
-depa.reduce()
-print(depa.nodelist)
-
-'''
-'''
-
-SN = SnailfishNumber
-
-apa = SN([SN([1,2]),SN([SN([3,4]),5])])
-print(apa.magnitude())
-'''
+partone("input.txt")
+parttwo("input.txt")
