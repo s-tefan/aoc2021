@@ -92,7 +92,8 @@ def main():
             result = bs.readpacket()
         except:
             break
-    print("Part 1. Version sum: {}\nPart 2. Expression result: {}".format(BitString.version_sum, result))
+    print("Part 1. Version sum: {}\nPart 2. Expression result: {}".format(
+        BitString.version_sum, result))
 
 
 
