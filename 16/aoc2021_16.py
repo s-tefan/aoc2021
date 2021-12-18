@@ -69,14 +69,9 @@ class BitString:
                     value = int(ret_list[0] < ret_list[1])
                 elif id == 7:
                     value = int(ret_list[0] == ret_list[1])
-            return_value = {
-                "version": version,
-                "id": id,
-                "value": value}
-            return return_value["value"]
+            return value
 
         except Exception:
-            print("Kuken!")
             raise Exception("Nu är det slut")
             return 0
 
