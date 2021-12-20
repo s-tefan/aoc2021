@@ -44,7 +44,7 @@ def vectors(pointlist):
     vectordict = {}
     for i, p in enumerate(pointlist):
         for j, q in enumerate(pointlist[:i]):
-            vectordict[(i,j)] = tuple(map( lambda x,y: x-y, p,q))
+            vectordict[(i,j)] = tuple(map( lambda pp,qq: qq-pp, p,q))
     return vectordict
 
 def dot(u,v):
