@@ -18,7 +18,7 @@ def main(filename):
     for k in beacons_at_scanner: # scanner # k
         vdict[k] = vectors(beacons_at_scanner[k]) # vectors between beacons
         sqd_dict[k] = {vk: sqn(v) for vk, v in vdict[k].items()} # squared norm of vectors
-        print(min(sqd_dict[k].values()))
+        #print(min(sqd_dict[k].values()))
         #print(sqd_dict[k])
     candidates = set()
     for i, k1 in enumerate(scanner_key_list):
@@ -29,16 +29,16 @@ def main(filename):
             if len(set(sqd_dict[k1].values()) & set(sqd_dict[k2].values())) >= 66:
                 candidates.add((k1,k2))
     # set candidates contains pairs of candidates with possibly qualified overlap
-    print("Candidates:", candidates)
+    #print("Candidates:", candidates)
     #print(set(x[0] for x in candidates) | set(x[1] for x in candidates))
 
 
     for k1, k2 in candidates:
         apa = {((a,b), av, bv) for a, av in sqd_dict[k1].items() for b, bv in sqd_dict[k2].items() if av == bv}
-        print(k1,k2,apa)
-        print(set(a[1] for ((a,b),c,d) in apa))
+        #print(k1,k2,apa)
+        #print(set(a[1] for ((a,b),c,d) in apa))
         points1 = [x for pair in vdict[k1].items() for x in pair]
-        print(box(points1))
+        #print(box(points1))
 
 def vectors(pointlist):
     vectordict = {}
